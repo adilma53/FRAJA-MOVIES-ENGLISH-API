@@ -43,6 +43,42 @@ exports.getUser = async (req, res) => {
   }
 };
 
-// update user
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await User.findOneAndDelete({
+      firebaseId: req.params.firebaseId,
+    });
 
-// delete user
+    if (!user) {
+      res.status(404).send('user firebaseId not found');
+    } else {
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      {
+        firebaseId: req.params.firebaseId,
+      },
+      req.body,
+      { new: true }
+    );
+
+    if (!user) {
+      res
+        .status(404)
+        .send(`user with firebaseId:${req.params.firebaseId} not found`);
+    } else {
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+};
