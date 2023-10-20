@@ -3,7 +3,10 @@ const asyncHandler = require('express-async-handler');
 
 const createUser = asyncHandler(async (req, res) => {
   try {
-    const card = await User.create(req.body);
+    const card = await User.create({
+      title: req.body.title,
+      description: req.body.description,
+    });
     res.status(200).json(card); // Respond with the created card as JSON
   } catch (error) {
     res.status(500); // Set the HTTP status code to 500 (Internal Server Error)
