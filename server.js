@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
+const movieRoutes = require('./routes/movieRoutes');
+
 const mongoose = require('mongoose');
 
 const app = express();
@@ -13,7 +15,7 @@ app.use(express.json());
 const MONGO_URL = process.env.MONGO_URL;
 // ------------------
 
-app.use('/api/user', userRoutes);
+app.use('/api', userRoutes, movieRoutes);
 
 app.get('/hello', (req, res) => {
   res.send('Hello World!');

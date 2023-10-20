@@ -9,14 +9,14 @@ const {
   updateUser,
 } = require('../controllers/userController');
 
-router.post('/signup/:firebaseId', createUser);
+router.post('/user/signup/:firebaseId', createUser);
 
-router.get('/allusers', getUsers);
+router.get('/user/allusers', getUsers);
 
-router.get('/:firebaseId', getUser);
+router.get('/user/:firebaseId', getUser);
 
-router.delete('/delete/:firebaseId', deleteUser);
+router.delete('/user/delete/:firebaseId', deleteUser);
 
-router.put('/update/:firebaseId', updateUser);
+router.put('/user/update/:firebaseId', updateUser);
 
 module.exports = router;
