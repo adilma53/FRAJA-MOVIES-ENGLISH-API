@@ -1,19 +1,19 @@
-const User = require('../models/userModel');
-const asyncHandler = require('express-async-handler');
+const { User } = require('../models/userModel');
 
-const createUser = asyncHandler(async (req, res) => {
-  try {
-    const card = await User.create({
-      title: req.body.title,
-      description: req.body.description,
-    });
-    res.status(200).json(card); // Respond with the created card as JSON
-  } catch (error) {
-    res.status(500); // Set the HTTP status code to 500 (Internal Server Error)
-    throw new Error(error.message); // Throw an error with the error message
+exports.createUser = async (req, res) => {
+  const email = await User.findOne({ email: req.body.email });
+  if (email) {
+    res.status(300).send('this email already exists');
+  } else {
+    try {
+      const user = await User.create({
+        ...req.body,
+        firebaseId: req.params.firebaseId,
+      });
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500);
+      throw new Error(error.message);
+    }
   }
-});
-
-module.exports = {
-  createUser,
 };

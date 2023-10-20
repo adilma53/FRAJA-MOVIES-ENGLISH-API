@@ -13,6 +13,8 @@
 //     likes: Number,
 //     dislikes: Number,
 
+//    hidden:Boolean,
+
 //     response: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 //   },
 //   { timestamps: true }

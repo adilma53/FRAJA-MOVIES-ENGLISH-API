@@ -1,23 +1,48 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// Define the schema for the "Card" model with three fields: title, description, and image
-const cardSchema = new Schema(
+
+const movieSchema = new Schema({
+  tmdbId: String,
+});
+
+const commentSchema = new Schema(
   {
-    title: {
-      type: String,
-      required: false, // Require a title field with a validation message
-    },
-    description: {
-      type: String,
-      required: false, // Require a description field with a validation message
-    },
+    content: String,
+
+    author: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+
+    likes: Number,
+    dislikes: Number,
+
+    hidden: Boolean,
+
+    response: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
-  {
-    timestamps: true, // Enable timestamps for created and updated date fields
-  }
+  { timestamps: true }
 );
 
-// Create the "Card" model using the schema
-const User = mongoose.model('user', cardSchema);
+const userSchema = new Schema(
+  {
+    name: String,
 
-module.exports = User;
+    email: String,
+    password: String,
+
+    firebaseId: String,
+
+    hidden: Boolean,
+
+    watched: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
+    watchLater: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
+
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+  },
+  { timestamps: true }
+);
+
+const User = mongoose.model('user', userSchema);
+const Movie = mongoose.model('movie', movieSchema);
+const Comment = mongoose.model('comment', commentSchema);
+
+module.exports = { User, Movie, Comment };

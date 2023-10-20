@@ -3,6 +3,6 @@ const router = express.Router();
 
 const { createUser } = require('../controllers/userController');
 
-router.post('/add', createUser);
+router.post('/signup/:firebaseId', createUser);
 
 module.exports = router;
