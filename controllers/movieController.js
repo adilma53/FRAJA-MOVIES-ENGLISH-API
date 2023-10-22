@@ -1,4 +1,4 @@
-const { Movie } = require('../models/userModel');
+const { Movie } = require('../models/movieModel');
 
 exports.createMovie = async (req, res) => {
   const email = await Movie.findOne({ tmdbId: req.params.tmdbId });

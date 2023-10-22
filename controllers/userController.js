@@ -1,4 +1,7 @@
 const { User } = require('../models/userModel');
+const { Movie } = require('../models/movieModel');
+
+const { createMovie } = require('./movieController');
 
 exports.createUser = async (req, res) => {
   const email = await User.findOne({ email: req.body.email });
@@ -82,3 +85,38 @@ exports.updateUser = async (req, res) => {
     throw new Error(error.message);
   }
 };
+
+exports.addToWatchLater = async (req, res) => {
+  // const whichList = req.params.listType;
+  // addToList
+  var movie = await Movie.findOne({ tmdbId: req.body.tmdbId });
+  if (!movie) {
+    movie = await Movie.create({
+      ...req.body,
+      tmdbId: req.body.tmdbId,
+    });
+  }
+  // ----------------------
+  try {
+    // Find the user by firebaseId and update their watched list
+
+    const user = await User.updateOne(
+      { firebaseId: req.params.firebaseId },
+      { $push: { watchLater: movie?._id } },
+      { new: true }
+    );
+
+    if (!movie) {
+      res.status(404).send(`movie with tmdbId:${req.body.tmdbId} not found`);
+    } else {
+      res.status(200).json(movie);
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+};
+
+// add movies to user
+
+// remove movies from user

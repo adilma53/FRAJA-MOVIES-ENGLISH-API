@@ -1,22 +1,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const movieSchema = new Schema({
-  tmdbId: String,
-});
+const { Movie } = require('../models/movieModel');
 
 const commentSchema = new Schema(
   {
     content: String,
 
-    author: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-
-    likes: Number,
-    dislikes: Number,
+    upVote: Number,
+    downVote: Number,
 
     hidden: Boolean,
 
-    response: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    responses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
   { timestamps: true }
 );
@@ -24,9 +21,8 @@ const commentSchema = new Schema(
 const userSchema = new Schema(
   {
     name: String,
-
     email: String,
-    password: String,
+    avatar: String,
 
     firebaseId: String,
 
@@ -37,12 +33,14 @@ const userSchema = new Schema(
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
 
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );
 
 const User = mongoose.model('user', userSchema);
-const Movie = mongoose.model('movie', movieSchema);
+
 const Comment = mongoose.model('comment', commentSchema);
 
-module.exports = { User, Movie, Comment };
+module.exports = { User, Comment };
