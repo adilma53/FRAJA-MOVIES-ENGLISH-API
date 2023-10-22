@@ -86,8 +86,8 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-exports.addToWatchLater = async (req, res) => {
-  // const whichList = req.params.listType;
+exports.addToList = async (req, res) => {
+  const whichList = req.params.listType;
   // addToList
   var movie = await Movie.findOne({ tmdbId: req.body.tmdbId });
   if (!movie) {
@@ -99,10 +99,12 @@ exports.addToWatchLater = async (req, res) => {
   // ----------------------
   try {
     // Find the user by firebaseId and update their watched list
+    const newMovie = {};
+    newMovie[whichList] = movie?._id;
 
     const user = await User.updateOne(
       { firebaseId: req.params.firebaseId },
-      { $push: { watchLater: movie?._id } },
+      { $push: newMovie },
       { new: true }
     );
 
@@ -117,6 +119,6 @@ exports.addToWatchLater = async (req, res) => {
   }
 };
 
-// add movies to user
+// add movie to user list
 
-// remove movies from user
+// remove movie from user list

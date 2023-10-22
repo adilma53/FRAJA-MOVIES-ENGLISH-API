@@ -7,7 +7,7 @@ const {
   getUser,
   deleteUser,
   updateUser,
-  addToWatchLater,
+  addToList,
 } = require('../controllers/userController');
 
 router.post('/user/signup/:firebaseId', createUser);
@@ -20,6 +20,6 @@ router.delete('/user/delete/:firebaseId', deleteUser);
 
 router.put('/user/update/:firebaseId', updateUser);
 
-router.put('/user/:firebaseId/addToWatchLater/', addToWatchLater);
+router.put('/user/:firebaseId/addtolist/:listType', addToList);
 
 module.exports = router;
