@@ -155,6 +155,104 @@ exports.removeMovieFromList = async (req, res) => {
   }
 };
 // -----------------------------------------------------
-// add movie to user list
 
-// remove movie from user list
+// exports.removeMovieFromHistory = async (req, res) => {
+//   // addMovieToHistory
+//   const whichList = req.params.listType;
+//   // addToList
+//   var movie = await Movie.findOne({ tmdbId: req.body.tmdbId });
+//   if (!movie) {
+//     movie = await Movie.create({
+//       ...req.body,
+//       tmdbId: req.body.tmdbId,
+//     });
+//   }
+//   try {
+//     // Find the user by firebaseId and update their watched list
+//     const movieToRemove = {};
+//     movieToRemove[whichList] = movie?._id;
+
+//     const user = await User.updateOne(
+//       { firebaseId: req.params.firebaseId },
+//       { $pull: movieToRemove },
+//       { new: true }
+//     );
+
+//     if (!movie) {
+//       res.status(404).send(`movie with tmdbId:${req.body.tmdbId} not found`);
+//     } else {
+//       res.status(200).json(movie);
+//     }
+//   } catch (error) {
+//     res.status(500);
+//     throw new Error(error.message);
+//   }
+// };
+// -----------------------------------------------------
+exports.addFriend = async (req, res) => {
+  var friend = await User.findOne({ firebaseId: req.params.friendFirebaseId });
+  if (!friend) {
+    res
+      .status(404)
+      .send(`friend with firebaseId:${req.params.friendFirebaseId} not found`);
+  }
+  // ----------------------
+  try {
+    // Find the user by firebaseId and update their watched list
+    const newFriend = {};
+    newFriend['friends'] = friend?._id;
+
+    const user = await User.updateOne(
+      { firebaseId: req.params.firebaseId },
+      { $addToSet: newFriend },
+      { new: true }
+    );
+
+    if (!friend) {
+      res
+        .status(404)
+        .send(
+          `friend with firebaseId:${req.params.friendFirebaseId} not found`
+        );
+    } else {
+      res.status(200).json(friend);
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+};
+// -----------------------------------------------------
+exports.removeFriend = async (req, res) => {
+  var friend = await User.findOne({ firebaseId: req.params.friendFirebaseId });
+  if (!friend) {
+    res
+      .status(404)
+      .send(`friend with firebaseId:${req.param.friendFirebaseId} not found`);
+  }
+  // ----------------------
+  try {
+    // Find the user by firebaseId and update their watched list
+    const friendToRemove = {};
+    friendToRemove['friends'] = friend?._id;
+
+    const user = await User.updateOne(
+      { firebaseId: req.params.firebaseId },
+      { $pull: friendToRemove },
+      { new: true }
+    );
+
+    if (!friend) {
+      res
+        .status(404)
+        .send(
+          `friend with firebaseId:${req.params.friendFirebaseId} not found`
+        );
+    } else {
+      res.status(200).json(friend);
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+};

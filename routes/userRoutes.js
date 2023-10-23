@@ -9,6 +9,8 @@ const {
   updateUser,
   addMovieToList,
   removeMovieFromList,
+  addFriend,
+  removeFriend,
 } = require('../controllers/userController');
 
 router.post('/user/signup/:firebaseId', createUser);
@@ -24,5 +26,9 @@ router.put('/user/update/:firebaseId', updateUser);
 router.put('/user/:firebaseId/addtolist/:listType', addMovieToList);
 
 router.put('/user/:firebaseId/removefromlist/:listType', removeMovieFromList);
+
+router.put('/user/:firebaseId/addfriend/:friendFirebaseId', addFriend);
+
+router.put('/user/:firebaseId/removefriend/:friendFirebaseId', removeFriend);
 
 module.exports = router;

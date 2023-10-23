@@ -2,21 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const { Movie } = require('../models/movieModel');
-
-const commentSchema = new Schema(
-  {
-    content: String,
-
-    upVote: Number,
-    downVote: Number,
-
-    hidden: Boolean,
-
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    responses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
-  },
-  { timestamps: true }
-);
+const { HistoryUnit } = require('../models/historyUnitModel');
+const { Comment } = require('../models/commentModel');
 
 const userSchema = new Schema(
   {
@@ -35,12 +22,12 @@ const userSchema = new Schema(
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+
+    history: [{ type: mongoose.Schema.Types.ObjectId, ref: 'HistoryUnit' }],
   },
   { timestamps: true }
 );
 
 const User = mongoose.model('user', userSchema);
 
-const Comment = mongoose.model('comment', commentSchema);
-
-module.exports = { User, Comment };
+module.exports = { User };
