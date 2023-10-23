@@ -2,6 +2,7 @@ const { User } = require('../models/userModel');
 const { Movie } = require('../models/movieModel');
 
 const { createMovie } = require('./movieController');
+const { Comment } = require('../models/commentModel');
 
 exports.createUser = async (req, res) => {
   const email = await User.findOne({ email: req.body.email });
@@ -250,6 +251,34 @@ exports.removeFriend = async (req, res) => {
         );
     } else {
       res.status(200).json(friend);
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+};
+// -----------------------------------------------------
+exports.addComment = async (req, res) => {
+  const getUser = await User.findOne({ firebaseId: req.params.firebaseId });
+  try {
+    const comment = await Comment.create({
+      ...req.body,
+      author: getUser._id,
+    });
+
+    const newComment = {};
+    newComment['comments'] = comment?._id;
+
+    const user = await User.updateOne(
+      { firebaseId: req.params.firebaseId },
+      { $addToSet: newComment },
+      { new: true }
+    );
+
+    if (!comment) {
+      res.status(404).send(`comment could not be created try again`);
+    } else {
+      res.status(200).json(comment);
     }
   } catch (error) {
     res.status(500);
