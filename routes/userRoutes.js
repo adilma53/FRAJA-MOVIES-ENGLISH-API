@@ -7,13 +7,19 @@ const {
   getUser,
   deleteUser,
   updateUser,
+} = require('../controllers/userController');
+
+const {
   addMovieToList,
   removeMovieFromList,
-  addFriend,
-  removeFriend,
+} = require('../controllers/movieListsController');
+
+const {
   addComment,
   deleteComment,
-} = require('../controllers/userController');
+} = require('../controllers/commentController');
+
+const { addFriend, removeFriend } = require('../controllers/friendController');
 
 router.post('/user/signup/:firebaseId', createUser);
 
