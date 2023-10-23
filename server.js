@@ -14,6 +14,9 @@ app.use(express.json());
 // ----------------
 const MONGO_URL = process.env.MONGO_URL;
 // ------------------
+app.get('/', (req, res) => {
+  res.send('hello from adil api');
+});
 
 app.use('/api', userRoutes, movieRoutes);
 
