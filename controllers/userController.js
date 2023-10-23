@@ -285,3 +285,27 @@ exports.addComment = async (req, res) => {
     throw new Error(error.message);
   }
 };
+// -----------------------------------------------------
+exports.deleteComment = async (req, res) => {
+  try {
+    const commentTORemove = {};
+    commentTORemove['comments'] = req.body.commentId;
+
+    const user = await User.updateOne(
+      { firebaseId: req.params.firebaseId },
+      { $pull: commentTORemove },
+      { new: true }
+    );
+
+    const comment = await Comment.findByIdAndDelete(req.body.commentId);
+
+    if (!comment) {
+      res.status(404).send(`comment could not be removed try again`);
+    } else {
+      res.status(200).json(comment);
+    }
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+};

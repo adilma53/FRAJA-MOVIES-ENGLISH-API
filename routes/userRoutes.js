@@ -12,6 +12,7 @@ const {
   addFriend,
   removeFriend,
   addComment,
+  deleteComment,
 } = require('../controllers/userController');
 
 router.post('/user/signup/:firebaseId', createUser);
@@ -33,5 +34,7 @@ router.put('/user/:firebaseId/addfriend/:friendFirebaseId', addFriend);
 router.put('/user/:firebaseId/removefriend/:friendFirebaseId', removeFriend);
 
 router.put('/user/:firebaseId/addcomment', addComment);
+
+router.put('/user/:firebaseId/deletecomment', deleteComment);
 
 module.exports = router;
