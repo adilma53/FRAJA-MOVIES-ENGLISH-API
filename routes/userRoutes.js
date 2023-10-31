@@ -10,9 +10,9 @@ const {
 } = require('../controllers/userController');
 
 const {
-  addMovieToList,
-  removeMovieFromList,
-} = require('../controllers/movieListsController');
+  addShowToList,
+  removeShowFromList,
+} = require('../controllers/watchListController');
 
 const {
   addComment,
@@ -31,9 +31,9 @@ router.delete('/user/delete/:firebaseId', deleteUser);
 
 router.put('/user/update/:firebaseId', updateUser);
 
-router.put('/user/:firebaseId/addtolist/:listType', addMovieToList);
+router.put('/user/:firebaseId/addtolist/:listType', addShowToList);
 
-router.put('/user/:firebaseId/removefromlist/:listType', removeMovieFromList);
+router.put('/user/:firebaseId/removefromlist/:listType', removeShowFromList);
 
 router.put('/user/:firebaseId/addfriend/:friendFirebaseId', addFriend);
 

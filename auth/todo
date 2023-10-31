@@ -1,0 +1,20 @@
+core backend functionalities:
+
+signup
+login
+logout
+restore password "otp"
+
+user info
+friends
+comments
+
+show
+watch lists
+collections
+watch history
+
+<!-- ------------------- -->
+
+build postman documention and how to use guide for the api;
+get deeply involved on how things work under the hood in auth libraries;

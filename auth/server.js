@@ -1,29 +1,24 @@
 require('dotenv').config();
-
 const express = require('express');
-
-const userRoutes = require('./routes/userRoutes');
-const showRoutes = require('./routes/showRoutes');
-
 const mongoose = require('mongoose');
-
+// ----------------
 const app = express();
 const port = 3000;
-
 app.use(express.json());
+// ----------------
+
+const mainRoutes = require('./routes/mainRoutes');
 
 // ----------------
 const MONGO_URL = process.env.MONGO_URL;
-// ------------------
+// ----------------
+
+app.use('/api', mainRoutes);
+
 app.get('/', (req, res) => {
   res.send('hello from adil api');
 });
-
-app.use('/api', userRoutes, showRoutes);
-
-app.get('/hello', (req, res) => {
-  res.send('Hello World!');
-});
+// ----------------
 
 mongoose
   .connect(MONGO_URL)
@@ -37,5 +32,3 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-
-module.exports = app;

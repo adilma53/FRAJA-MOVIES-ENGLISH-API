@@ -1,0 +1,8 @@
+@base_url = http://localhost:3000
+
+GET {{base_url}}/api/user/allusers
+
+
+###
+GET {{base_url}}/api/user/777
+

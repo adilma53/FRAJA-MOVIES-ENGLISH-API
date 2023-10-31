@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const { Comment } = require('../models/commentModel');
+const { Comment } = require('./commentModel');
 
-const movieSchema = new Schema(
+const showSchema = new Schema(
   {
     tmdbId: String,
 
@@ -14,6 +14,6 @@ const movieSchema = new Schema(
   }
 );
 
-const Movie = mongoose.model('movie', movieSchema);
+const Show = mongoose.model('show', showSchema);
 
-module.exports = { Movie };
+module.exports = { Show };

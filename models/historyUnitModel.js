@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const { Movie } = require('../models/movieModel');
+const { Show } = require('./showModel');
 
 const historyUnitSchema = new Schema(
   {
-    show: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie' },
+    show: { type: mongoose.Schema.Types.ObjectId, ref: 'Show' },
   },
   {
     timestamps: true,
