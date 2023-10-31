@@ -8,11 +8,15 @@ import PersonalCollection from './personalCollectionModel.js';
 
 const userSchema = new Schema(
   {
-    fName: String,
-    lName: String,
+    firstName: String,
+    lastName: String,
 
     password: String,
-    email: String,
+    email: { type: String, unique: true },
+
+    token: String,
+
+    // ------------
 
     avatar: String,
 

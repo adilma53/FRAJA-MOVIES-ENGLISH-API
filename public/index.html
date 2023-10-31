@@ -126,7 +126,14 @@
     </ul>
 
     <script>
-      const baseURL = 'localhost:3000/api';
+      // Access the LOCAL_OR_DEPLOYED variable passed from the server
+      const LOCAL_OR_DEPLOYED = '<%= LOCAL_OR_DEPLOYED %>';
+
+      // Define the baseURL based on the environment variable
+      const baseURL =
+        LOCAL_OR_DEPLOYED === 'local'
+          ? 'localhost:3000/api'
+          : 'fraja-movies-english-api.vercel.app/api';
 
       function navigate(route) {
         window.location.href = `http://${baseURL}${route}`;

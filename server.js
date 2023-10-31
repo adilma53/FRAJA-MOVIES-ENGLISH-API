@@ -24,9 +24,16 @@ app.use(morgan('dev'));
 // ----------------
 const MONGO_URL = process.env.MONGO_URL;
 // ------------------
+// Define the path to your static files
+const staticPath = __dirname + '/public';
+
+// Serve static files (HTML, CSS, JavaScript, etc.) from the "public" folder
+app.use(express.static(staticPath));
+// ---------------------
 app.get('/', (req, res) => {
+  const LOCAL_OR_DEPLOYED = process.env.LOCAL_OR_DEPLOYED || 'local';
   // res.send('hello from adil api');
-  res.sendFile(__dirname + '/public/index.html');
+  res.render(__dirname + '/public/index.html', { LOCAL_OR_DEPLOYED });
 });
 
 app.use('/api', userRoutes, showRoutes);

@@ -2,7 +2,7 @@ import { User } from '../models/userModel.js';
 import { hashPassword, verifyHashedPassword } from '../utils/hashing.js';
 import { createJwtToken } from '../utils/createJwtToken.js';
 
-export const createUser = async (req, res) => {
+export const signUp = async (req, res) => {
   try {
     let { name, email, password } = req.body;
 
@@ -28,19 +28,6 @@ export const createUser = async (req, res) => {
     }
   } catch (error) {
     return res.status(500).send(error.message);
-  }
-};
-export const getAllUsers = async (req, res) => {
-  try {
-    const allUsers = await User.find();
-
-    if (!allUsers) {
-      res.status(500).send('no users found in the database');
-    } else {
-      res.status(200).json(allUsers);
-    }
-  } catch (error) {
-    throw new Error(error.message);
   }
 };
 
