@@ -1,6 +1,6 @@
-const { Show } = require('../models/showModel');
+import Show from '../models/showModel.js';
 
-exports.createShow = async (req, res) => {
+export const createShow = async (req, res) => {
   const email = await Show.findOne({ tmdbId: req.params.tmdbId });
   if (email) {
     res.status(300).send('this show already exists');
@@ -18,7 +18,7 @@ exports.createShow = async (req, res) => {
   }
 };
 
-exports.getShows = async (req, res) => {
+export const getShows = async (req, res) => {
   try {
     const shows = await Show.find();
     res.status(200).json(shows);
@@ -28,7 +28,7 @@ exports.getShows = async (req, res) => {
   }
 };
 
-exports.getShow = async (req, res) => {
+export const getShow = async (req, res) => {
   try {
     const show = await Show.findOne({ tmdbId: req.params.tmdbId });
 
@@ -43,7 +43,7 @@ exports.getShow = async (req, res) => {
   }
 };
 
-exports.deleteShow = async (req, res) => {
+export const deleteShow = async (req, res) => {
   try {
     const show = await Show.findOneAndDelete({
       tmdbId: req.params.tmdbId,
@@ -60,7 +60,7 @@ exports.deleteShow = async (req, res) => {
   }
 };
 
-exports.updateShow = async (req, res) => {
+export const updateShow = async (req, res) => {
   try {
     const show = await Show.findOneAndUpdate(
       {

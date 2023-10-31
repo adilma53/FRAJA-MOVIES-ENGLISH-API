@@ -1,7 +1,7 @@
-const { User } = require('../models/userModel');
-const { Show } = require('../models/showModel');
+import User from '../models/userModel.js';
+import Show from '../models/showModel.js';
 
-exports.createUser = async (req, res) => {
+export const createUser = async (req, res) => {
   const email = await User.findOne({ email: req.body.email });
   if (email) {
     res.status(300).send('this email already exists');
@@ -19,7 +19,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.getUsers = async (req, res) => {
+export const getUsers = async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -29,7 +29,7 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-exports.getUser = async (req, res) => {
+export const getUser = async (req, res) => {
   try {
     const user = await User.findOne({ firebaseId: req.params.firebaseId });
 
@@ -44,7 +44,7 @@ exports.getUser = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const user = await User.findOneAndDelete({
       firebaseId: req.params.firebaseId,
@@ -61,7 +61,7 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(
       {
@@ -88,7 +88,7 @@ exports.updateUser = async (req, res) => {
 
 // -----------------------------------------------------
 
-// exports.removeShowFromHistory = async (req, res) => {
+// export const removeShowFromHistory = async (req, res) => {
 //   // addShowToHistory
 //   const whichList = req.params.listType;
 //   // addToList

@@ -1,9 +1,8 @@
-const { User } = require('../models/userModel');
+import { User } from '../models/userModel.js';
+import { hashPassword, verifyHashedPassword } from '../utils/hashing.js';
+import { createJwtToken } from '../utils/createJwtToken.js';
 
-const { hashPassword, verifyHashedPassword } = require('../utils/hashing');
-const { createJwtToken } = require('../utils/createJwtToken');
-
-exports.createUser = async (req, res) => {
+export const createUser = async (req, res) => {
   try {
     let { name, email, password } = req.body;
 
@@ -31,7 +30,7 @@ exports.createUser = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const allUsers = await User.find();
 
@@ -45,7 +44,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     let { email, password } = req.body;
 

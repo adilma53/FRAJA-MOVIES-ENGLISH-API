@@ -1,25 +1,22 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const {
+import {
   createUser,
   getUsers,
   getUser,
   deleteUser,
   updateUser,
-} = require('../controllers/userController');
+} from '../controllers/userController.js';
 
-const {
+import {
   addShowToList,
   removeShowFromList,
-} = require('../controllers/watchListController');
+} from '../controllers/watchListController.js';
 
-const {
-  addComment,
-  deleteComment,
-} = require('../controllers/commentController');
+import { addComment, deleteComment } from '../controllers/commentController.js';
 
-const { addFriend, removeFriend } = require('../controllers/friendController');
+import { addFriend, removeFriend } from '../controllers/friendController.js';
 
 router.post('/user/signup/:firebaseId', createUser);
 
@@ -43,4 +40,4 @@ router.put('/user/:firebaseId/addcomment', addComment);
 
 router.put('/user/:firebaseId/deletecomment', deleteComment);
 
-module.exports = router;
+export default router;

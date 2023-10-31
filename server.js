@@ -1,22 +1,32 @@
-require('dotenv').config();
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-const express = require('express');
+// // Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const userRoutes = require('./routes/userRoutes');
-const showRoutes = require('./routes/showRoutes');
+// -------------------
+import userRoutes from './routes/userRoutes.js';
+import showRoutes from './routes/showRoutes.js';
 
-const mongoose = require('mongoose');
-
+import mongoose from 'mongoose';
+import morgan from 'morgan';
+// ------------------------------
+import express from 'express';
+import dontenv from 'dotenv';
+dontenv.config();
+// ----------------------------
 const app = express();
 const port = 3000;
 
 app.use(express.json());
-
+app.use(morgan('dev'));
 // ----------------
 const MONGO_URL = process.env.MONGO_URL;
 // ------------------
 app.get('/', (req, res) => {
-  res.send('hello from adil api');
+  // res.send('hello from adil api');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 app.use('/api', userRoutes, showRoutes);
@@ -38,4 +48,4 @@ mongoose
     console.log(error);
   });
 
-module.exports = app;
+export default app;

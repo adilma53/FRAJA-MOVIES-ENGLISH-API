@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const { Comment } = require('./commentModel');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+import Comment from './commentModel.js';
 
 const personalCollectionSchema = new Schema(
   {
@@ -21,4 +20,4 @@ const PersonalCollection = mongoose.model(
   personalCollectionSchema
 );
 
-module.exports = { PersonalCollection };
+export default PersonalCollection;

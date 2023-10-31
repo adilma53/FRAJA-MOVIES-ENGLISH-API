@@ -1,9 +1,9 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
+import 'dotenv/config.js';
+import jwt from 'jsonwebtoken';
 
 const { TOKEN_KEY, TOKEN_EXPIRY } = process.env;
 
-exports.createJwtToken = async (
+export const createJwtToken = async (
   tokenData,
   tokenKey = TOKEN_KEY,
   expiresIn = TOKEN_EXPIRY

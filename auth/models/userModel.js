@@ -1,14 +1,13 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const { Collection } = require('../models/collectionModel');
-const { History } = require('../models/historyModel');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+import { Collection } from '../models/collectionModel.js';
 
 const userSchema = new Schema(
   {
     name: String,
     email: { type: String, unique: true },
     password: String,
+
     token: String,
   },
   { timestamp: true }
@@ -34,4 +33,4 @@ const userSchema = new Schema(
 
 const User = mongoose.model('user', userSchema);
 
-module.exports = { User };
+export default { User };

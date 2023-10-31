@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API Documentation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .route {
+        cursor: pointer;
+        color: blue;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>API Documentation</h1>
+    <p>Base URL: <code>localhost:3000/api</code></p>
+
+    <h2>Show Routes</h2>
+    <ul>
+      <li>
+        <span class="route" onclick="navigate('/show/add/inception')"
+          >/show/add/inception</span
+        >
+        - Create a show
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/show/update/inception')"
+          >/show/update/inception</span
+        >
+        - Update a show
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/show/delete/inception')"
+          >/show/delete/inception</span
+        >
+        - Delete a show
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/show/allshows')"
+          >/show/allshows</span
+        >
+        - Get all shows
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/show/inception')"
+          >/show/inception</span
+        >
+        - Get a show by ID
+      </li>
+    </ul>
+
+    <h2>User Routes</h2>
+    <ul>
+      <li>
+        <span class="route" onclick="navigate('/user/signup/777')"
+          >/user/signup/777</span
+        >
+        - Create a user
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/user/allusers')"
+          >/user/allusers</span
+        >
+        - Get all users
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/user/777')">/user/777</span>
+        - Get a user by ID
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/user/delete/777')"
+          >/user/delete/777</span
+        >
+        - Delete a user
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/user/update/777')"
+          >/user/update/777</span
+        >
+        - Update a user
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/user/777/addtolist/favorites')"
+          >/user/777/addtolist/favorites</span
+        >
+        - Add a show to a user's list
+      </li>
+      <li>
+        <span
+          class="route"
+          onclick="navigate('/user/777/removefromlist/favorites')"
+          >/user/777/removefromlist/favorites</span
+        >
+        - Remove a show from a user's list
+      </li>
+      <li>
+        <span
+          class="route"
+          onclick="navigate('/user/777/addfriend/:friendFirebaseId')"
+          >/user/777/addfriend/:friendFirebaseId</span
+        >
+        - Add a friend to a user's list
+      </li>
+      <li>
+        <span
+          class="route"
+          onclick="navigate('/user/777/removefriend/:friendFirebaseId')"
+          >/user/777/removefriend/:friendFirebaseId</span
+        >
+        - Remove a friend from a user's list
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/user/777/addcomment')"
+          >/user/777/addcomment</span
+        >
+        - Add a comment
+      </li>
+      <li>
+        <span class="route" onclick="navigate('/user/777/deletecomment')"
+          >/user/777/deletecomment</span
+        >
+        - Delete a comment
+      </li>
+    </ul>
+
+    <script>
+      const baseURL = 'localhost:3000/api';
+
+      function navigate(route) {
+        window.location.href = `http://${baseURL}${route}`;
+      }
+    </script>
+  </body>
+</html>

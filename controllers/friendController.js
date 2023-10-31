@@ -1,6 +1,6 @@
-const { User } = require('../models/userModel');
+import User from '../models/userModel.js';
 
-exports.addFriend = async (req, res) => {
+export const addFriend = async (req, res) => {
   var friend = await User.findOne({ firebaseId: req.params.friendFirebaseId });
   if (!friend) {
     res
@@ -33,7 +33,7 @@ exports.addFriend = async (req, res) => {
   }
 };
 // -----------------------------------------------------
-exports.removeFriend = async (req, res) => {
+export const removeFriend = async (req, res) => {
   var friend = await User.findOne({ firebaseId: req.params.friendFirebaseId });
   if (!friend) {
     res

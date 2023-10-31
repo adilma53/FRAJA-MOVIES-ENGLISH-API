@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const { Show } = require('./showModel');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+import Show from './showModel.js';
 
 const historyUnitSchema = new Schema(
   {
@@ -14,4 +13,4 @@ const historyUnitSchema = new Schema(
 
 const HistoryUnit = mongoose.model('historyunit', historyUnitSchema);
 
-module.exports = { HistoryUnit };
+export default HistoryUnit;

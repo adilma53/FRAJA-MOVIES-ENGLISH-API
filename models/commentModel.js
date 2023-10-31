@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
-const { User } = require('../models/userModel');
+import User from './userModel.js';
 
 const commentSchema = new Schema(
   {
@@ -21,4 +21,4 @@ const commentSchema = new Schema(
 
 const Comment = mongoose.model('comment', commentSchema);
 
-module.exports = { Comment };
+export default Comment;

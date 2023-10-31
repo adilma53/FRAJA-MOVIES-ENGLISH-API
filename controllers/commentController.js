@@ -1,8 +1,7 @@
-const { User } = require('../models/userModel');
+import User from '../models/userModel.js';
+import Comment from '../models/commentModel.js';
 
-const { Comment } = require('../models/commentModel');
-
-exports.addComment = async (req, res) => {
+export const addComment = async (req, res) => {
   const getUser = await User.findOne({ firebaseId: req.params.firebaseId });
   try {
     const comment = await Comment.create({
@@ -30,7 +29,7 @@ exports.addComment = async (req, res) => {
   }
 };
 // -----------------------------------------------------
-exports.deleteComment = async (req, res) => {
+export const deleteComment = async (req, res) => {
   try {
     const commentTORemove = {};
     commentTORemove['comments'] = req.body.commentId;

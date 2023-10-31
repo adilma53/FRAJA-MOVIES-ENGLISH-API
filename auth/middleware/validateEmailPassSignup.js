@@ -1,4 +1,4 @@
-exports.validateEmailPassSignup = async (req, res, next) => {
+export const validateEmailPassSignup = async (req, res, next) => {
   try {
     let { name, email, password } = req.body;
     name = name?.trim();

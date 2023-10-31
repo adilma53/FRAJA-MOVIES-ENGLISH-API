@@ -1,7 +1,8 @@
-const { User } = require('../models/userModel');
-const { Show } = require('../models/showModel');
+import User from '../models/userModel.js';
+import Show from '../models/showModel.js';
+
 // addToCollection
-exports.addShowToList = async (req, res) => {
+export const addShowToList = async (req, res) => {
   const whichList = req.params.listType;
   const tmdbId = { tmdbId: req.body.tmdbId };
   const firebaseId = { firebaseId: req.params.firebaseId };
@@ -38,39 +39,7 @@ exports.addShowToList = async (req, res) => {
   }
 };
 // -----------------------------------------------------
-// exports.addShowToList = async (req, res) => {
-//   const whichList = req.params.listType;
-//   // addToList
-//   var show = await Show.findOne({ tmdbId: req.body.tmdbId });
-//   if (!show) {
-//     show = await Show.create({
-//       ...req.body,
-//       tmdbId: req.body.tmdbId,
-//     });
-//   }
-//   try {
-//     // Find the user by firebaseId and update their watched list
-//     const newShow = {};
-//     newShow[whichList] = show?._id;
-
-//     const user = await User.updateOne(
-//       { firebaseId: req.params.firebaseId },
-//       { $addToSet: newShow },
-//       { new: true }
-//     );
-
-//     if (!show) {
-//       res.status(404).send(`show with tmdbId:${req.body.tmdbId} not found`);
-//     } else {
-//       res.status(200).json(show);
-//     }
-//   } catch (error) {
-//     res.status(500);
-//     throw new Error(error.message);
-//   }
-// };
-// // -----------------------------------------------------
-exports.removeShowFromList = async (req, res) => {
+export const removeShowFromList = async (req, res) => {
   const whichList = req.params.listType;
   const tmdbId = { tmdbId: req.body.tmdbId };
   const firebaseId = { firebaseId: req.params.firebaseId };
@@ -101,8 +70,43 @@ exports.removeShowFromList = async (req, res) => {
     throw new Error(error.message);
   }
 };
+// -----------------------------------------------------
+
+//  old functions before refactoring
+
+// export const addShowToList = async (req, res) => {
+//   const whichList = req.params.listType;
+//   // addToList
+//   var show = await Show.findOne({ tmdbId: req.body.tmdbId });
+//   if (!show) {
+//     show = await Show.create({
+//       ...req.body,
+//       tmdbId: req.body.tmdbId,
+//     });
+//   }
+//   try {
+//     // Find the user by firebaseId and update their watched list
+//     const newShow = {};
+//     newShow[whichList] = show?._id;
+
+//     const user = await User.updateOne(
+//       { firebaseId: req.params.firebaseId },
+//       { $addToSet: newShow },
+//       { new: true }
+//     );
+
+//     if (!show) {
+//       res.status(404).send(`show with tmdbId:${req.body.tmdbId} not found`);
+//     } else {
+//       res.status(200).json(show);
+//     }
+//   } catch (error) {
+//     res.status(500);
+//     throw new Error(error.message);
+//   }
+// };
 // --------------------------------------------------------
-// exports.removeShowFromList = async (req, res) => {
+// export const removeShowFromList = async (req, res) => {
 //   const whichList = req.params.listType;
 //   // addToList
 //   var show = await Show.findOne({ tmdbId: req.body.tmdbId });
@@ -137,7 +141,7 @@ exports.removeShowFromList = async (req, res) => {
 // --------------------------------------------------------
 // --------------------------------------------------------
 
-// exports.addShowToList = async (req, res) => {
+// export const addShowToList = async (req, res) => {
 //   const whichList = req.params.listType;
 //   // addToList
 //   var show = await Show.findOne({ tmdbId: req.body.tmdbId });

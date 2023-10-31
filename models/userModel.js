@@ -1,10 +1,11 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
-const { Show } = require('./showModel');
-const { HistoryUnit } = require('../models/historyUnitModel');
-const { Comment } = require('../models/commentModel');
-const { PersonalCollection } = require('../models/personalCollectionModel');
+import Show from './showModel.js';
+import HistoryUnit from './historyUnitModel.js';
+import Comment from './commentModel.js';
+import PersonalCollection from './personalCollectionModel.js';
+
 const userSchema = new Schema(
   {
     fName: String,
@@ -89,4 +90,4 @@ userSchema.loadClass(userClass);
 
 const User = mongoose.model('user', userSchema);
 
-module.exports = { User };
+export default User;

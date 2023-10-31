@@ -1,18 +1,15 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-
-const {
+import {
   createUser,
   getAllUsers,
   login,
-} = require('../controllers/userController');
-const {
-  validateEmailPassLogin,
-} = require('../middleware/validateEmailPassLogin');
-const {
-  validateEmailPassSignup,
-} = require('../middleware/validateEmailPassSignup');
-const { authorizeToken } = require('../middleware/authorizeToken');
+} from '../controllers/userController.js';
+import { validateEmailPassLogin } from '../middleware/validateEmailPassLogin.js';
+import { validateEmailPassSignup } from '../middleware/validateEmailPassSignup.js';
+import { authorizeToken } from '../middleware/authorizeToken.js';
+
+// ------------------------------------------------------------------------
 
 router.post('/signup', validateEmailPassSignup, createUser);
 
@@ -28,4 +25,4 @@ router.get('/private_profile', authorizeToken, async (req, res) => {
     .send(`you are in the private profile of ${req.currentUser.email}`);
 });
 
-module.exports = router;
+export default router;

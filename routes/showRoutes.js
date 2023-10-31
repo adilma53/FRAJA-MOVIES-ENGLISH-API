@@ -1,13 +1,13 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const {
+import {
   createShow,
   getShows,
   getShow,
   deleteShow,
   updateShow,
-} = require('../controllers/showController');
+} from '../controllers/showController.js';
 
 router.post('/show/add/:tmdbId', createShow);
 
@@ -19,4 +19,4 @@ router.get('/show/allshows', getShows);
 
 router.get('/show/:tmdbId', getShow);
 
-module.exports = router;
+export default router;

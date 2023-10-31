@@ -1,10 +1,10 @@
-const bcrypt = require('bcrypt');
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
+import bcrypt from 'bcrypt';
+import 'dotenv/config.js';
+import jwt from 'jsonwebtoken';
 
 const { TOKEN_KEY } = process.env;
 
-exports.authorizeToken = async (req, res, next) => {
+export const uthorizeToken = async (req, res, next) => {
   // token can be retrieved from multiple potential sources
   const token =
     req.body.token || req.query.token || req.headers['x-access-token'];
