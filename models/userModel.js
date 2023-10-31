@@ -86,6 +86,10 @@ class userClass {
 
     return this.save();
   }
+  // ---------------------------------------------------------------------------
+
+  // add comment to user
+  // remove comment from user
 }
 
 userSchema.loadClass(userClass);
