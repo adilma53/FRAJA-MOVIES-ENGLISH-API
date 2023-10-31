@@ -1,5 +1,5 @@
-import { User } from '../models/userModel.js';
-import { hashPassword, verifyHashedPassword } from '../utils/hashing.js';
+import User from '../../models/userModel.js';
+import { hashData, verifyHashedData } from '../utils/hashing.js';
 import { createJwtToken } from '../utils/createJwtToken.js';
 
 export const signUp = async (req, res) => {
@@ -11,7 +11,7 @@ export const signUp = async (req, res) => {
       return res.status(500).send('this email already exists');
     }
 
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await hashData(password);
 
     const data = {
       name: name.trim(),
@@ -44,7 +44,7 @@ export const login = async (req, res) => {
       return res.status(500).send('invalide email try again');
     }
 
-    const passwordMatch = await verifyHashedPassword(password, user.password);
+    const passwordMatch = await verifyHashedData(password, user.password);
 
     if (!passwordMatch) {
       return res.status(500).send('invalide password try again');

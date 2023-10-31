@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 // -------------------
 import userRoutes from './routes/userRoutes.js';
 import showRoutes from './routes/showRoutes.js';
+import authRoutes from './auth/routes/authRoutes.js';
 
 import mongoose from 'mongoose';
 import morgan from 'morgan';
@@ -36,7 +37,7 @@ app.get('/', (req, res) => {
   res.render(__dirname + '/public/index.html', { LOCAL_OR_DEPLOYED });
 });
 
-app.use('/api', userRoutes, showRoutes);
+app.use('/api', userRoutes, showRoutes, authRoutes);
 
 app.get('/hello', (req, res) => {
   res.send('Hello World!');

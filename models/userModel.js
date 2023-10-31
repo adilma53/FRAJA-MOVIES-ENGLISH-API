@@ -8,8 +8,7 @@ import PersonalCollection from './personalCollectionModel.js';
 
 const userSchema = new Schema(
   {
-    firstName: String,
-    lastName: String,
+    name: String,
 
     password: String,
     email: { type: String, unique: true },
@@ -42,9 +41,8 @@ const userSchema = new Schema(
 
 class userClass {
   // profile
-  updateProfile({ fName, lName }) {
-    this.fName = fName;
-    this.lName = lName;
+  updateProfile(name) {
+    this.name = name;
 
     return this.save;
   }

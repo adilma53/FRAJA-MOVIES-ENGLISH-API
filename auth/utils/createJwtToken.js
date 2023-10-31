@@ -1,5 +1,7 @@
-import 'dotenv/config.js';
 import jwt from 'jsonwebtoken';
+
+import dontenv from 'dotenv';
+dontenv.config();
 
 const { TOKEN_KEY, TOKEN_EXPIRY } = process.env;
 
