@@ -26,10 +26,14 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 var corsOptions = {
-  origin: '*',
+  origin: 'http://localhost:5173',
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
+// Parse incoming JSON requests
+app.use(express.json());
+// Use the express.urlencoded() middleware to parse URL-encoded form data
+app.use(express.urlencoded({ extended: false }));
 // ----------------
 const MONGO_URL = process.env.MONGO_URL;
 // ------------------
