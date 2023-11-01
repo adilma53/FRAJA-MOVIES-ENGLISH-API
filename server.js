@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 var corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'https://fraja-movies-english.vercel.app'],
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
