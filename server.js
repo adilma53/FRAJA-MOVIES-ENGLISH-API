@@ -9,9 +9,9 @@ const __dirname = dirname(__filename);
 import userRoutes from './routes/userRoutes.js';
 import showRoutes from './routes/showRoutes.js';
 import authRoutes from './auth/routes/authRoutes.js';
-
 import commentRoutes from './routes/commentRoutes.js';
-
+// ------------------------------
+import cors from 'cors';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 // ------------------------------
@@ -24,6 +24,12 @@ const port = 3000;
 
 app.use(express.json());
 app.use(morgan('dev'));
+
+var corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 // ----------------
 const MONGO_URL = process.env.MONGO_URL;
 // ------------------
