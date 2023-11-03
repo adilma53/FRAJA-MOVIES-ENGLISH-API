@@ -6,15 +6,15 @@ export const validateEmailPassSignup = async (req, res, next) => {
     password = password?.trim();
 
     if (!name || !email || !password) {
-      return res.status(500).send('fill all fields');
+      return res.status(500).send('fill all fields please');
     } else if (!/^[a-zA-Z ]*$/.test(name)) {
-      return res.status(500).send('invalid name entered');
+      return res.status(500).send('invalid name format entered');
     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      return res.status(500).send('invalid email entered');
+      return res.status(500).send('invalid email format entered');
     } else if (password.length < 7) {
       return res
         .status(500)
-        .send('password too short enter 6 characters or more');
+        .send('password too short use 6 characters or more');
     }
     // If none of the conditions are met, proceed to the next middleware or route handler.
     next();

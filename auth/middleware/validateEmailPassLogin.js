@@ -7,7 +7,7 @@ export const validateEmailPassLogin = async (req, res, next) => {
     if (!email || !password) {
       return res.status(500).send('fill all fields');
     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      return res.status(500).send('invalid email entered');
+      return res.status(500).send('invalid email format entered');
     } else if (password.length < 7) {
       return res
         .status(500)
