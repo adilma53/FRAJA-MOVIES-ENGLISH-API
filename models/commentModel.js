@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
-
 import User from './userModel.js';
+import autopopulate from 'mongoose-autopopulate';
 
 const commentSchema = new Schema(
   {
@@ -12,13 +12,25 @@ const commentSchema = new Schema(
 
     hidden: Boolean,
 
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      autopopulate: true,
+    },
 
-    responses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    responses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+        autopopulate: true,
+      },
+    ],
   },
   { timestamps: true }
 );
 
-const Comment = mongoose.model('comment', commentSchema);
+commentSchema.plugin(autopopulate);
+
+const Comment = mongoose.model('Comment', commentSchema);
 
 export default Comment;

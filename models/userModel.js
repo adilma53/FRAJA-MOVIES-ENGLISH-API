@@ -5,7 +5,7 @@ import autopopulate from 'mongoose-autopopulate';
 import Show from './showModel.js';
 import HistoryUnit from './historyUnitModel.js';
 import Comment from './commentModel.js';
-import PersonalCollection from './personalCollectionModel.js';
+import Collection from './collectionModel.js';
 
 const userSchema = new Schema(
   {
@@ -36,7 +36,7 @@ const userSchema = new Schema(
     collections: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'PersonalCollection',
+        ref: 'Collection',
         autopopulate: true,
       },
     ],
@@ -56,7 +56,7 @@ const userSchema = new Schema(
     history: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'HistoryUnit',
+        ref: 'historyUnit',
         autopopulate: true,
       },
     ],
@@ -121,6 +121,6 @@ userSchema.plugin(autopopulate);
 
 userSchema.loadClass(userClass);
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 export default User;
