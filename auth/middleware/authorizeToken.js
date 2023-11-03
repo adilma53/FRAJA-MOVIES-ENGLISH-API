@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 const { TOKEN_KEY } = process.env;
 
 export const authorizeToken = async (req, res, next) => {
-  // token can be retrieved from multiple potential sources
+  // token can be retrieved from multiple potential sources !!
   const token =
     req.body.token || req.query.token || req.headers['x-access-token'];
 
