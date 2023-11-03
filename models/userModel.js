@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
+import autopopulate from 'mongoose-autopopulate';
 
 import Show from './showModel.js';
 import HistoryUnit from './historyUnitModel.js';
@@ -22,19 +23,43 @@ const userSchema = new Schema(
     isOnline: Boolean,
     isHidden: Boolean,
 
-    watched: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Show' }],
-    watchLater: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Show' }],
-    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Show' }],
-
-    collections: [
-      { type: mongoose.Schema.Types.ObjectId, ref: 'PersonalCollection' },
+    watched: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Show', autopopulate: true },
+    ],
+    watchLater: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Show', autopopulate: true },
+    ],
+    favorites: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Show', autopopulate: true },
     ],
 
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    collections: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PersonalCollection',
+        autopopulate: true,
+      },
+    ],
 
-    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+        autopopulate: true,
+      },
+    ],
 
-    history: [{ type: mongoose.Schema.Types.ObjectId, ref: 'HistoryUnit' }],
+    friends: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true },
+    ],
+
+    history: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'HistoryUnit',
+        autopopulate: true,
+      },
+    ],
   },
   { timestamps: true }
 );
@@ -91,6 +116,8 @@ class userClass {
   // add comment to user
   // remove comment from user
 }
+
+userSchema.plugin(autopopulate);
 
 userSchema.loadClass(userClass);
 
