@@ -3,71 +3,66 @@ import Show from '../models/showModel.js';
 
 // addToCollection
 export const addShowToList = async (req, res) => {
-  const whichList = req.params.listType;
-  const tmdbId = { tmdbId: req.body.tmdbId };
-  const firebaseId = { firebaseId: req.params.firebaseId };
+  const { userId, listType } = req.params;
+  const { tmdbId } = req.body;
 
-  var show = await Show.findOne(tmdbId);
+  var show = await Show.findOne({ tmdbId: tmdbId });
   if (!show) {
     show = await Show.create({
       ...req.body,
-      tmdbId: req.body.tmdbId,
+      tmdbId: tmdbId,
     });
   }
   try {
-    const user = await User.findOne(firebaseId);
+    const user = await User.findOne({ _id: userId });
 
     // check if show already in list
-    if (user[whichList].includes(show._id)) {
-      return res
-        .status(404)
-        .send(`show with tmdbId:${req.body.tmdbId} already in list`);
+    if (user[listType].includes(show._id)) {
+      return res.status(404).send(`show with tmdbId:${tmdbId} already in list`);
     }
 
-    await user.addToList(whichList, show._id);
+    await user.addToList(listType, show._id);
 
     if (!show) {
-      res
-        .status(404)
-        .send(`failed to create show with tmdbId:${req.body.tmdbId}`);
+      res.status(404).send(`failed to create show with tmdbId:${tmdbId}`);
     } else {
       res.status(200).json(show);
     }
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    return res.status(500).send(error.message);
   }
 };
 // -----------------------------------------------------
 export const removeShowFromList = async (req, res) => {
-  const whichList = req.params.listType;
-  const tmdbId = { tmdbId: req.body.tmdbId };
-  const firebaseId = { firebaseId: req.params.firebaseId };
-
-  var show = await Show.findOne(tmdbId);
-  // check if show already in list
+  const { userId, listType } = req.params;
+  const { tmdbId } = req.body;
 
   try {
-    const user = await User.findOne(firebaseId);
-
-    if (!show || !user[whichList].includes(show._id)) {
-      return res
-        .status(404)
-        .send(`show with tmdbId:${req.body.tmdbId} is not in this list`);
-    }
-
-    user.deleteFromList(whichList, show._id);
+    const show = await Show.findOne({ tmdbId: tmdbId });
+    const user = await User.findOne({ _id: userId });
 
     if (!show) {
-      return res
-        .status(404)
-        .send(`show with tmdbId:${req.body.tmdbId} not found`);
+      return res.status(500).send(`show with tmdbId:${tmdbId} not found`);
+    }
+
+    // this does not work for now
+    // check if the show in the list
+    // const showIds = user[listType].map((item) => item._id);
+    // if (!showIds.includes(show._id)) {
+    //   return res
+    //     .status(500)
+    //     .send(`show with tmdbId:${tmdbId} is not in the targeted list`);
+    // }
+
+    user.deleteFromList(listType, show._id);
+
+    if (!show) {
+      return res.status(404).send(`show with tmdbId:${tmdbId} not found`);
     } else {
       return res.status(200).json(show);
     }
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    return res.status(500).send(error.message);
   }
 };
 // -----------------------------------------------------

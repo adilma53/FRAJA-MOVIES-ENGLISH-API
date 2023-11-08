@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 import Comment from './commentModel.js';
-import autopopulate from 'mongoose-autopopulate';
 
 const showSchema = new Schema(
   {
@@ -11,7 +10,6 @@ const showSchema = new Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment',
-        autopopulate: true,
       },
     ],
   },
@@ -19,8 +17,6 @@ const showSchema = new Schema(
     timestamps: true,
   }
 );
-
-showSchema.plugin(autopopulate);
 
 const Show = mongoose.model('Show', showSchema);
 

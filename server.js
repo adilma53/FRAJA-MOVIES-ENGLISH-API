@@ -10,6 +10,7 @@ import userRoutes from './routes/userRoutes.js';
 import showRoutes from './routes/showRoutes.js';
 import authRoutes from './auth/routes/authRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
+import collectionRoutes from './routes/collectionRoutes.js';
 // ------------------------------
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -49,7 +50,14 @@ app.get('/', (req, res) => {
   res.render(__dirname + '/public/index.html', { LOCAL_OR_DEPLOYED });
 });
 
-app.use('/api', userRoutes, showRoutes, commentRoutes, authRoutes);
+app.use(
+  '/api',
+  userRoutes,
+  showRoutes,
+  commentRoutes,
+  authRoutes,
+  collectionRoutes
+);
 
 app.get('/hello', (req, res) => {
   res.send('Hello World!');

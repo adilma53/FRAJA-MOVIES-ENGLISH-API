@@ -11,8 +11,8 @@ const userSchema = new Schema(
   {
     name: String,
 
-    password: String,
     email: { type: String, unique: true },
+    password: String,
 
     token: String,
 
@@ -49,9 +49,7 @@ const userSchema = new Schema(
       },
     ],
 
-    friends: [
-      { type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true },
-    ],
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 
     history: [
       {
@@ -106,7 +104,7 @@ class userClass {
 
   deleteFromList(whichList, deletedId) {
     this[whichList] = this[whichList].filter(
-      (item) => String(item) !== String(deletedId)
+      (item) => String(item._id) !== String(deletedId)
     );
 
     return this.save();

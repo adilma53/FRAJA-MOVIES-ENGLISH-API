@@ -2,19 +2,21 @@ import User from '../models/userModel.js';
 import Show from '../models/showModel.js';
 
 export const createUser = async (req, res) => {
-  const email = await User.findOne({ email: req.body.email });
-  if (email) {
-    res.status(300).send('this email already exists');
+  const { userId } = req.params;
+  const { email } = req.body;
+
+  const user = await User.findOne({ email: email });
+  if (user) {
+    return res.status(500).send('this user email already exists');
   } else {
     try {
       const user = await User.create({
         ...req.body,
-        firebaseId: req.params.firebaseId,
+        _id: userId,
       });
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } catch (error) {
-      res.status(500);
-      throw new Error(error.message);
+      return res.status(500).send(error.message);
     }
   }
 };
@@ -22,65 +24,65 @@ export const createUser = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find();
-    res.status(200).json(users);
+    return res.status(200).json(users);
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    return res.status(500).send(error.message);
   }
 };
 
 export const getUser = async (req, res) => {
   try {
-    const user = await User.findOne({ firebaseId: req.params.firebaseId });
+    const { userId } = req.params;
+
+    const user = await User.findOne({ _id: userId });
 
     if (!user) {
-      res.status(200).send('user not found');
+      return res.status(500).send(`user with id:${userId} not found`);
     } else {
-      res.status(200).json(user);
+      return res.status(200).json(user);
     }
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    return res.status(500).send(error.message);
   }
 };
 
 export const deleteUser = async (req, res) => {
+  const { userId } = req.params;
+
   try {
     const user = await User.findOneAndDelete({
-      firebaseId: req.params.firebaseId,
+      _id: userId,
     });
 
     if (!user) {
-      res.status(404).send('user firebaseId not found');
+      return res.status(500).send(`user with id:${userId} not found`);
     } else {
-      res.status(200).json(user);
+      return res.status(200).json(user);
     }
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    return res.status(500).send(error.message);
   }
 };
 
 export const updateUser = async (req, res) => {
+  const { userId } = req.params;
+
   try {
     const user = await User.findOneAndUpdate(
       {
-        firebaseId: req.params.firebaseId,
+        _id: userId,
       },
       req.body,
       { new: true }
     );
 
     if (!user) {
-      res
-        .status(404)
-        .send(`user with firebaseId:${req.params.firebaseId} not found`);
+      return res.status(500).send(`user with id:${userId} not found`);
     } else {
-      res.status(200).json(user);
+      return res.status(200).json(user);
     }
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    return res.status(500).send(error.message);
   }
 };
 
@@ -111,12 +113,12 @@ export const updateUser = async (req, res) => {
 //     );
 
 //     if (!show) {
-//       res.status(404).send(`show with tmdbId:${req.body.tmdbId} not found`);
+//       return res.status(404).send(`show with tmdbId:${req.body.tmdbId} not found`);
 //     } else {
-//       res.status(200).json(show);
+//       return res.status(200).json(show);
 //     }
 //   } catch (error) {
-//     res.status(500);
+//     return res.status(500);
 //     throw new Error(error.message);
 //   }
 // };

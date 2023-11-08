@@ -1,67 +1,56 @@
 import User from '../models/userModel.js';
 
 export const addFriend = async (req, res) => {
-  var friend = await User.findOne({ firebaseId: req.params.friendFirebaseId });
+  const { userId, friendId } = req.params;
+
+  var friend = await User.findOne({ _id: friendId });
   if (!friend) {
-    res
-      .status(404)
-      .send(`friend with firebaseId:${req.params.friendFirebaseId} not found`);
+    return res.status(500).send(`friend with _id:${friendId} not found`);
   }
   try {
-    // Find the user by firebaseId and update their watched list
+    // Find the user by _id and update their watched list
     const newFriend = {};
     newFriend['friends'] = friend?._id;
 
     const user = await User.updateOne(
-      { firebaseId: req.params.firebaseId },
+      { _id: userId },
       { $addToSet: newFriend },
       { new: true }
     );
 
     if (!friend) {
-      res
-        .status(404)
-        .send(
-          `friend with firebaseId:${req.params.friendFirebaseId} not found`
-        );
+      return res.status(500).send(`friend with _id:${friendId} not found`);
     } else {
-      res.status(200).json(friend);
+      return res.status(200).json(friend);
     }
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    return res.status(500).send(error.message);
   }
 };
 // -----------------------------------------------------
 export const removeFriend = async (req, res) => {
-  var friend = await User.findOne({ firebaseId: req.params.friendFirebaseId });
+  const { userId, friendId } = req.params;
+
+  var friend = await User.findOne({ _id: friendId });
   if (!friend) {
-    res
-      .status(404)
-      .send(`friend with firebaseId:${req.param.friendFirebaseId} not found`);
+    return res.status(500).send(`friend with _id:${friendId} not found`);
   }
   try {
-    // Find the user by firebaseId and update their watched list
+    // Find the user by _id and update their watched list
     const friendToRemove = {};
     friendToRemove['friends'] = friend?._id;
-
     const user = await User.updateOne(
-      { firebaseId: req.params.firebaseId },
+      { _id: userId },
       { $pull: friendToRemove },
       { new: true }
     );
 
     if (!friend) {
-      res
-        .status(404)
-        .send(
-          `friend with firebaseId:${req.params.friendFirebaseId} not found`
-        );
+      return res.status(500).send(`friend with _id:${friendId} not found`);
     } else {
-      res.status(200).json(friend);
+      return res.status(200).json(friend);
     }
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    return res.status(500).send(error.message);
   }
 };
