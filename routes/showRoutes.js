@@ -1,22 +1,16 @@
 import express from 'express';
 const router = express.Router();
 
-import {
-  createShow,
-  getShows,
-  getShow,
-  deleteShow,
-  updateShow,
-} from '../controllers/showController.js';
+import * as show from '../controllers/showController.js';
 
-router.post('/show/add/:tmdbId', createShow);
+router.post('/show/createshow', show.createShow);
 
-router.put('/show/update/:tmdbId', updateShow);
+router.put('/show/updateshow', show.updateShow);
 
-router.delete('/show/delete/:tmdbId', deleteShow);
+router.delete('/show/deleteshow', show.deleteShow);
 
-router.get('/show/allshows', getShows);
+router.get('/show/getallshows', show.getShows);
 
-router.get('/show/:tmdbId', getShow);
+router.get('/show/getsingleshow', show.getShow);
 
 export default router;

@@ -98,6 +98,27 @@ export const updateCollection = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
+// -----------------------------------------------------
+
+export const getCollectionShows = async (req, res) => {
+  // const { userId } = req.params;
+  // const { showId, updateType } = req.body;
+  const { collection_id } = req.query;
+
+  try {
+    const collection = await Collection.findOne({
+      _id: collection_id,
+    });
+
+    if (!collection) {
+      return res.status(404).send(`collection with _id: ${_id} not found`);
+    } else {
+      return res.status(200).send(collection.shows);
+    }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
 // addToCollection
 // export const addShowToList = async (req, res) => {
 //   const { userId, listType } = req.params;
