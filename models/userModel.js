@@ -23,15 +23,9 @@ const userSchema = new Schema(
     isOnline: Boolean,
     isHidden: Boolean,
 
-    watched: [
-      { type: mongoose.Schema.Types.ObjectId, ref: 'Show', autopopulate: true },
-    ],
-    watchLater: [
-      { type: mongoose.Schema.Types.ObjectId, ref: 'Show', autopopulate: true },
-    ],
-    favorites: [
-      { type: mongoose.Schema.Types.ObjectId, ref: 'Show', autopopulate: true },
-    ],
+    watched: [{ type: Number, ref: 'Show', autopopulate: true }],
+    watchLater: [{ type: Number, ref: 'Show', autopopulate: true }],
+    favorites: [{ type: Number, ref: 'Show', autopopulate: true }],
 
     collections: [
       {

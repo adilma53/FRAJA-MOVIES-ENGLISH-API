@@ -4,7 +4,7 @@ import Comment from './commentModel.js';
 
 const showSchema = new Schema(
   {
-    tmdbId: String,
+    _id: { type: Number, required: true },
 
     comments: [
       {

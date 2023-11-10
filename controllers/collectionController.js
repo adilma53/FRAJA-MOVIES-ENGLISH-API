@@ -32,11 +32,11 @@ export const createCollection = async (req, res) => {
 
 // -----------------------------------------------------
 export const deleteCollection = async (req, res) => {
-  const { collectionId } = req.body;
+  const { collection_id } = req.query;
 
   try {
     const collection = await Collection.findByIdAndDelete({
-      _id: collectionId,
+      _id: collection_id,
     });
 
     if (!collection) {
@@ -51,15 +51,20 @@ export const deleteCollection = async (req, res) => {
 // -----------------------------------------------------
 
 export const updateCollection = async (req, res) => {
-  const { userId } = req.params;
-  const { showId, updateType } = req.body;
+  const { showId } = req.body;
+  const { updateType } = req.params;
   const { collection_id } = req.query;
 
   try {
     let collection = undefined;
 
-    // add show to collection
-    if (updateType == 'addShow') {
+    if (updateType == 'addshow') {
+      // checkif show exists
+      const isShow = await Show.findOne({ _id: showId });
+      if (!isShow) {
+        const show = await Show.create({ _id: showId });
+      }
+
       collection = await Collection.findOneAndUpdate(
         {
           _id: collection_id,
@@ -69,7 +74,7 @@ export const updateCollection = async (req, res) => {
       );
     }
     // delete show from collection
-    else if (updateType == 'deleteShow') {
+    else if (updateType == 'deleteshow') {
       collection = await Collection.findOneAndUpdate(
         {
           _id: collection_id,
@@ -101,8 +106,6 @@ export const updateCollection = async (req, res) => {
 // -----------------------------------------------------
 
 export const getCollectionShows = async (req, res) => {
-  // const { userId } = req.params;
-  // const { showId, updateType } = req.body;
   const { collection_id } = req.query;
 
   try {
@@ -114,6 +117,24 @@ export const getCollectionShows = async (req, res) => {
       return res.status(404).send(`collection with _id: ${_id} not found`);
     } else {
       return res.status(200).send(collection.shows);
+    }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+export const getUserCollections = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findOne({
+      _id: userId,
+    });
+
+    if (!user) {
+      return res.status(404).send(`user with _id: ${_id} not found`);
+    } else {
+      return res.status(200).send(user.collections);
     }
   } catch (error) {
     return res.status(500).send(error.message);

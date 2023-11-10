@@ -5,8 +5,7 @@ import Comment from './commentModel.js';
 const collectionSchema = new Schema(
   {
     name: String,
-
-    shows: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Show' }],
+    shows: [{ type: Number, ref: 'Show' }],
   },
   {
     timestamps: true,

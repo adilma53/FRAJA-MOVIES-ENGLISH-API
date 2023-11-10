@@ -4,10 +4,7 @@ import Show from './showModel.js';
 
 const historyUnitSchema = new Schema(
   {
-    show: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Show',
-    },
+    show: { type: Number, ref: 'Show' },
   },
   {
     timestamps: true,

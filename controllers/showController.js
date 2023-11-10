@@ -1,24 +1,26 @@
+import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
+
 import Show from '../models/showModel.js';
 
 export const createShow = async (req, res) => {
   const { tmdbId } = req.query;
 
-  const isShow = await Show.findOne({ _id: tmdbId });
-  if (isShow) {
-    return res.status(300).send('this show already exists');
-  } else {
-    try {
-      const show = await Show.create({
-        _id: tmdbId,
-        ...req.body,
-      });
-      return res.status(200).json(show);
-    } catch (error) {
-      return res.status(500).send(error.message);
+  try {
+    const show = await Show.create({
+      _id: tmdbId,
+    });
+
+    if (!show) {
+      return res
+        .status(500)
+        .send(`show with _id:${tmdbId} can not be created try again please`);
     }
+    return res.status(200).json(show);
+  } catch (error) {
+    return res.status(500).send(error.message);
   }
 };
-
 export const getShows = async (req, res) => {
   try {
     const shows = await Show.find();
@@ -27,7 +29,13 @@ export const getShows = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
+// Convert the tmdbId to a valid ObjectId
+// const objectId = mongoose.Types.ObjectId(tmdbId);
 
+// const isShow = await Show.findOne({ _id: objectId });
+// if (isShow) {
+//   return res.status(400).send('This show already exists');
+// }
 export const getShow = async (req, res) => {
   const { tmdbId } = req.query;
 
